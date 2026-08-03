@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="AI_Chat_App.Core/AI_Chat_App.Core.csproj" />
   <Project Path="AI_Chat_App/AI_Chat_App.csproj" />
 </Solution>

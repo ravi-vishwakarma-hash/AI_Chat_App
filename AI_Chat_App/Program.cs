@@ -1,7 +1,31 @@
+using AI_Chat_App.Core.Interfaces;
+using AI_Chat_App.Core.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// register the HttpClient 
+builder.Services.AddHttpClient();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// register the AI services
+
+//builder.Services.AddKeyedTransient<IChatCompletionService>("ForumSpeed", (sp, key) =>
+//{
+//    var groqApiKey = builder.Configuration["GroqApiKey"];
+
+
+//    return new GroqChatCompletionService("llama-3.1-70b", groqApiKey);
+//});
+
+builder.Services.AddKeyedTransient<IChatCompletionService>("Google", (sp, key) =>
+{
+    var google = builder.Configuration.GetSection("AIModels:Google");
+    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+
+    return new GoogleGeminiChatCompletionService(httpClientFactory.CreateClient(), google["Model"]!, google["ApiKey"]!);
+});
 
 var app = builder.Build();
 
