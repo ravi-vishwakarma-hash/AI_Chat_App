@@ -36,8 +36,14 @@ namespace AI_Chat_App.Core.Services
 
             if (response.IsSuccessStatusCode)
             {
-                string responceContent = await response.Content.ReadAsStringAsync();
-                return responceContent;
+                using var responceContent = await response.Content.ReadAsStreamAsync();
+                using var jsonDocument = await JsonDocument.ParseAsync(responceContent);
+
+                return jsonDocument.RootElement
+                    .GetProperty("steps")[1]
+                    .GetProperty("content")[0]
+                    .GetProperty("text")
+                    .GetString() ?? string.Empty;
                  
             }
             else

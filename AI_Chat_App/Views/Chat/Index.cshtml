@@ -1,5 +1,97 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    Layout = null;
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat</title>
+
+    <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    <div class="app">
+         
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <button class="new-chat">
+                + New Chat
+            </button>
+
+            <div class="history">
+
+                <div class="history-item active">
+                    <span>ASP.NET Core Interview</span>
+                    <button class="delete">🗑</button>
+                </div>
+
+                <div class="history-item">
+                    <span>Angular Questions</span>
+                    <button class="delete">🗑</button>
+                </div>
+
+                <div class="history-item">
+                    <span>Entity Framework</span>
+                    <button class="delete">🗑</button>
+                </div>
+
+            </div>
+
+        </aside>
+        <div class="overlay"></div>
+
+        <!-- Chat Area -->
+        <main class="chat-container">
+
+            <header class="chat-header">
+                <button id="menuBtn" class="menu-btn">
+                    ☰
+                </button>
+                <h2>AI Assistant</h2>
+            </header>
+
+            <section class="messages">
+
+                <div class="message user">
+                    Explain Dependency Injection.
+                </div>
+
+                <div class="message ai">
+                    Dependency Injection is a design pattern that helps achieve loose coupling by injecting dependencies instead of creating them inside a class.
+                </div>
+
+                <div class="message user">
+                    Give me an example.
+                </div>
+
+                <div class="message ai">
+                    Sure! Here's an ASP.NET Core example...
+                </div>
+
+            </section>
+
+            <footer class="input-area">
+
+                <textarea placeholder="Ask anything..."
+                          rows="1"></textarea>
+
+                <button>Send</button>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js" async></script>
+
+    <script src="~/js/chat.js" asp-append-version="true"></script>
+</body>
+</html>

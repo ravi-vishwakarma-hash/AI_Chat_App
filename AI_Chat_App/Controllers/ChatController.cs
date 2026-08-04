@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AI_Chat_App.Controllers
 {
-    public class ChatController([FromKeyedServices("Google")] IChatCompletionService service) : Controller
+    public class ChatController(IServiceProvider serviceProvider) : Controller
     {
-        public IChatCompletionService Service { get; } = service;
+        public IServiceProvider ServiceProvider { get; } = serviceProvider;
 
         public IActionResult Index()
         {
@@ -13,7 +13,7 @@ namespace AI_Chat_App.Controllers
         }
 
 
-        public async Task<IActionResult> Chat(string prompt)
+        public async Task<IActionResult> Chat( string ModelId, string prompt)
         {
             if (string.IsNullOrWhiteSpace(prompt))
             {
@@ -21,7 +21,9 @@ namespace AI_Chat_App.Controllers
             }
             try
             {
-                var response = await Service.GetResponseAsync(prompt);
+                var _service = ServiceProvider.GetRequiredKeyedService<IChatCompletionService>(ModelId);
+
+                var response = await _service.GetResponseAsync(prompt);
                 return Ok(response);
             }
             catch (Exception ex)

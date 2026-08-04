@@ -6,9 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 // register the HttpClient 
 builder.Services.AddHttpClient();
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
 // register the AI services
 
 //builder.Services.AddKeyedTransient<IChatCompletionService>("ForumSpeed", (sp, key) =>
@@ -26,6 +23,9 @@ builder.Services.AddKeyedTransient<IChatCompletionService>("Google", (sp, key) =
 
     return new GoogleGeminiChatCompletionService(httpClientFactory.CreateClient(), google["Model"]!, google["ApiKey"]!);
 });
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
